@@ -5,12 +5,12 @@ WORKDIR /build
 COPY app/ ./
 
 ## RUN ##
-FROM node:20-alpine
+FROM node:22-alpine
 
 LABEL org.opencontainers.image.title="demo"
 LABEL org.opencontainers.image.version="1.0.0"
 
-RUN adduser -D server-user
+RUN apk upgrade --no-cache && adduser -D server-user
 
 WORKDIR /app
 COPY --from=build /build/ ./
