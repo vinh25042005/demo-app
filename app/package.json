@@ -1,0 +1,13 @@
+{
+  "name": "demo-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint *.js",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}
