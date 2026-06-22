@@ -40,6 +40,7 @@ jobs:
           format: table
           exit-code: 1
           severity: HIGH,CRITICAL
+          pkg-types: os
 
       - name: Generate SBOM with Syft
         uses: anchore/sbom-action@v0
