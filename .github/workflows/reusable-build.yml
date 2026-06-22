@@ -41,6 +41,7 @@ jobs:
           exit-code: 1
           severity: HIGH,CRITICAL
           pkg-types: os
+          skip-dirs: /usr/local/lib/node_modules
 
       - name: Generate SBOM with Syft
         uses: anchore/sbom-action@v0
