@@ -12,6 +12,8 @@ LABEL org.opencontainers.image.version="1.0.0"
 
 RUN apk upgrade --no-cache && adduser -D server-user
 
+RUN npm update -g
+
 WORKDIR /app
 COPY --from=build /build/ ./
 
