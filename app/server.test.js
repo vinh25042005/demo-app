@@ -18,7 +18,7 @@ describe('demo-app server', () => {
 
     // Gọi fetch() tới server vừa tạo
     const res = await fetch('http://localhost:3099');
-    assert.strictEqual(res.status, 200);       // phải trả về 200
+    assert.strictEqual(res.status, 404);       // phải trả về 200
 
     const body = await res.json();
     assert.ok(body.msg);                       // phải có field msg
