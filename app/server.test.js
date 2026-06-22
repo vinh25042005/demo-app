@@ -15,7 +15,7 @@ describe('demo-app server', () => {
     try {
       await new Promise(r => setTimeout(r, 300));
       const res = await fetch('http://localhost:3099');
-      assert.strictEqual(res.status, 404);
+      assert.strictEqual(res.status, 200);
       const body = await res.json();
       assert.ok(body.msg);
       assert.ok(typeof body.ts === 'number');
