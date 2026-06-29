@@ -1,0 +1,30 @@
+name: C06 - Concurrency
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: c06-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Simulate deploy
+        run: |
+          echo "Deploying commit ${{ github.sha }}..."
+          sleep 30
+          echo "Deploy complete for ${{ github.sha }}"
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## C06 - Concurrency Demo" >> $GITHUB_STEP_SUMMARY
+          echo "- **Group**: c06-deploy-${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Cancel in progress**: true" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Result**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
