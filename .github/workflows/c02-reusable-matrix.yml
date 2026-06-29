@@ -1,0 +1,33 @@
+name: C02 - Reusable + Matrix
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  # Prepare job: define matrix dynamically so reusable works with matrix
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo 'matrix={"include":[
+            {"name":"api","dockerfile":"deploy/api/Dockerfile"},
+            {"name":"worker","dockerfile":"deploy/worker/Dockerfile"},
+            {"name":"web","dockerfile":"deploy/web/Dockerfile"}
+          ]}' >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    strategy:
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    uses: ./.github/workflows/reusable-docker-build.yml
+    with:
+      image_name: ${{ matrix.name }}
+      dockerfile: ${{ matrix.dockerfile }}
