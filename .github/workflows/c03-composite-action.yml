@@ -1,0 +1,32 @@
+name: C03 - Composite Action
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup-node-app
+      - run: npm run lint
+        working-directory: app
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup-node-app
+      - run: npm test
+        working-directory: app
+
+  summary:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Job summary
+        run: |
+          echo "## C03 - Composite Action Demo" >> $GITHUB_STEP_SUMMARY
+          echo "- **lint**: ✅ Passed" >> $GITHUB_STEP_SUMMARY
+          echo "- **test**: ✅ Passed" >> $GITHUB_STEP_SUMMARY
+          echo "- **Composite action**: ./.github/actions/setup-node-app" >> $GITHUB_STEP_SUMMARY

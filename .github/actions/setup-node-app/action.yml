@@ -1,0 +1,23 @@
+name: Setup Node App
+description: Checkout, setup Node.js with npm cache, and install dependencies
+
+inputs:
+  node-version:
+    description: Node.js version
+    required: false
+    default: '20'
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'npm'
+        cache-dependency-path: app/package-lock.json
+
+    - run: npm ci
+      shell: bash
+      working-directory: app
